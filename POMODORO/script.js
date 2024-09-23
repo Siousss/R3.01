@@ -1,7 +1,12 @@
 let isTravail = true; // True signifie que c'est le temps de travail, False signifie pause
 let isStart = false;
-let secondes = 2; // 25 minutes en secondes
+let secondes = 25 *60; // 25 minutes en secondes
 let chrono;
+
+const travailTemps = 25 * 60; // 25 minutes pour le travail
+const pauseTemps = 5 * 60; // 5 minutes pour la pause
+let tempsTotal = travailTemps; // On commence avec le temps de travail
+const progressCircle = document.getElementById("progress-circle");
 
 // Élément où afficher le décompte
 let para = document.getElementById("affichage");
@@ -11,8 +16,12 @@ para.textContent = Math.trunc(secondes / 60) + " : " + (secondes % 60).toString(
 // Fonction pour incrémenter et afficher le temps
 function tic() {
     secondes--;
-    para.innerHTML = Math.trunc(secondes / 60) + " : " + (secondes % 60).toString().padStart(2, '0');
+    para.textContent = Math.trunc(secondes / 60) + " : " + (secondes % 60);
     
+     // Mise à jour du cercle de progression
+     let percent = (secondes / tempsTotal) * 100;
+     progressCircle.style.background = `conic-gradient(#3498db ${percent}%, #f4f4f4 ${percent}%)`;
+
     // Si le temps est écoulé, changer de mode
     if (secondes === 0) {
         window.clearInterval(chrono); // Stopper le timer
@@ -81,11 +90,12 @@ function reset() {
     secondes = 25 * 60;
     window.clearInterval(chrono);
     para.innerHTML = Math.trunc(secondes / 60) + " : " + (secondes % 60).toString().padStart(2, '0');
-        chrono = null;
-        isStart = false;
-        document.getElementById('pause').style.color = ''; // Couleur par défaut
-        document.getElementById('pause').style.backgroundColor = '';
-        document.getElementById('travail').style.color = ''; // Couleur par défaut
-        document.getElementById('travail').style.backgroundColor = '';
-        symb.textContent = "▷";
+    progressCircle.style.background = `conic-gradient(#3498db ${100}%, #f4f4f4 ${100}%)`;
+    chrono = null;
+    isStart = false;
+    document.getElementById('pause').style.color = ''; // Couleur par défaut
+    document.getElementById('pause').style.backgroundColor = '';
+    document.getElementById('travail').style.color = ''; // Couleur par défaut
+    document.getElementById('travail').style.backgroundColor = '';
+    symb.textContent = "▷";
 }

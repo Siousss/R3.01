@@ -1,7 +1,7 @@
 /* Style général */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #e74c3c;
     color: #333;
     display: flex;
     flex-direction: column;
@@ -15,11 +15,11 @@ body {
 h1 {
     font-size: 2.5rem;
     margin-bottom: 20px;
-    color: #2c3e50;
+    color: #ffffff;
 }
 
 /* Section Timer (Travail / Pause) */
-#visu {
+#visu { 
     display: flex;
     justify-content: space-between;
     width: 200px;
@@ -33,23 +33,47 @@ h1 {
 }
 
 #travail {
-    color: #27ae60; /* Couleur verte pour le travail */
+    color: #92fcf7; /* Couleur verte pour le travail */
 }
 
 #pause {
-    color: #e74c3c; /* Couleur rouge pour la pause */
+    color: #d7fa85; /* Couleur rouge pour la pause */
 }
 
 /* Affichage du timer */
 #affichage {
-    font-size: 2rem;
-    padding: 10px;
+    font-size: 3rem; /* Agrandir la taille de l'affichage du temps */
+    padding: 20px;
     background-color: #fff;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    width: 120px;
+    border-radius: 100%;
     text-align: center;
-    margin-bottom: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #333; /* Texte noir */
+    width: 4em;
+    height: 4em;
+    align-content: center;
+}
+
+/* Conteneur du cercle de progression */
+#progress-container {
+    position: relative;
+    width: 300px; /* Augmenter la taille du cercle */
+    height: 300px;  
+}
+
+#progress-circle {
+    width: 20rem;
+    height: 20rem;
+    border-radius: 50%;
+    background: conic-gradient(#3498db 0%, #f4f4f4 0%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 2rem; /* Plus d'espace en bas */
 }
 
 /* Boutons */
@@ -75,8 +99,9 @@ button:active {
 /* Footer / Signature */
 p {
     font-size: 0.8rem;
-    color: #7f8c8d;
+    color: #ffffff;
     position: absolute;
     bottom: 10px;
 
 }
+
