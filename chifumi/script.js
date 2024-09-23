@@ -53,5 +53,5 @@ choixJoueur.addEventListener('click', () =>{
     result.style.display = 'block';
 })
 
-zfk
+
 
