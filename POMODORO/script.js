@@ -3,23 +3,63 @@ let isStart = false;
 let secondes = 25 *60; // 25 minutes en secondes
 let chrono;
 
-const travailTemps = 25 * 60; // 25 minutes pour le travail
-const pauseTemps = 5 * 60; // 5 minutes pour la pause
-let tempsTotal = travailTemps; // On commence avec le temps de travail
+let travailTemps = 25 * 60; // 25 minutes pour le travail
+let pauseTemps = 5 * 60; // 5 minutes pour la pause
 const progressCircle = document.getElementById("progress-circle");
+progressCircle.style.background = `conic-gradient(#3498db ${100}%, #f4f4f4 ${100}%)`;
 
 // Élément où afficher le décompte
 let para = document.getElementById("affichage");
 let symb = document.getElementById("startButton");
 
 para.textContent = Math.trunc(secondes / 60) + " : " + (secondes % 60).toString().padStart(2, '0');
+
+// Éléments de la modal
+const settingsModal = document.getElementById('settingsModal');
+const closeButton = document.querySelector('.close-button');
+const settingsButton = document.getElementById('settingsButton');
+const saveSettingsButton = document.getElementById('save-settings');
+
+// Ouvrir la modal
+settingsButton.addEventListener('click', () => {
+    settingsModal.style.display = 'block';
+});
+
+// Fermer la modal
+closeButton.addEventListener('click', () => {
+    settingsModal.style.display = 'none';
+});
+
+// Enregistrer les nouveaux paramètres
+saveSettingsButton.addEventListener('click', () => {
+    travailTemps = parseInt(document.getElementById('work-duration').value*60);
+    pauseTemps = parseInt(document.getElementById('break-duration').value*60);
+    
+    // Mettre à jour les durées dans le chrono
+    if (isTravail) {
+        secondes = travailTemps;
+    } else {
+        secondes = pauseTemps;
+    }
+    para.innerHTML = Math.trunc(secondes / 60) + " : " + (secondes % 60).toString().padStart(2, '0');
+    progressCircle.style.background = `conic-gradient(#3498db ${100}%, #f4f4f4 ${100}%)`;
+    isStart = false;
+    settingsModal.style.display = 'none';
+});
+
+
 // Fonction pour incrémenter et afficher le temps
 function tic() {
     secondes--;
     para.textContent = Math.trunc(secondes / 60) + " : " + (secondes % 60);
-    
+    let percent = (secondes / travailTemps) * 100;
      // Mise à jour du cercle de progression
-     let percent = (secondes / tempsTotal) * 100;
+     if(isTravail) {
+        percent = (secondes / travailTemps) * 100;
+     }
+     else {
+        percent = (secondes / pauseTemps) * 100;
+     }
      progressCircle.style.background = `conic-gradient(#3498db ${percent}%, #f4f4f4 ${percent}%)`;
 
     // Si le temps est écoulé, changer de mode
@@ -29,7 +69,7 @@ function tic() {
         // Alterner entre travail et pause
         if (isTravail) {
             // Si le temps de travail passe à la pause
-            secondes = 5 * 60; // 5 minutes de pause
+            secondes = pauseTemps; // temps de pause
             isTravail = false;
             document.getElementById('travail').style.color = ''; // Remettre à la couleur par défaut
             document.getElementById('pause').style.color = 'blue'; // Changer la couleur pour indiquer la pause
@@ -37,7 +77,7 @@ function tic() {
             document.getElementById('pause').style.backgroundColor = 'lightgrey';
         } else {
             // Si la pause passe au temps de travail
-            secondes = 25 * 60; // 25 minutes de travail
+            secondes = travailTemps; // temps de travail
             isTravail = true;
             document.getElementById('pause').style.color = ''; // Remettre à la couleur par défaut
             document.getElementById('travail').style.color = 'blue'; // Changer la couleur pour indiquer le travail
@@ -87,7 +127,8 @@ function start() {
 }
 
 function reset() {
-    secondes = 25 * 60;
+    secondes = travailTemps;
+    isTravail = true;
     window.clearInterval(chrono);
     para.innerHTML = Math.trunc(secondes / 60) + " : " + (secondes % 60).toString().padStart(2, '0');
     progressCircle.style.background = `conic-gradient(#3498db ${100}%, #f4f4f4 ${100}%)`;
@@ -99,3 +140,6 @@ function reset() {
     document.getElementById('travail').style.backgroundColor = '';
     symb.textContent = "▷";
 }
+
+//reset();
+

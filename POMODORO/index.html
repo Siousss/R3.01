@@ -11,10 +11,25 @@
 
     <h1 id="title">TIMER POMODORO</h1>
     
-    <div id="visu">
+    <div id="mode">
         <div id="travail">Travail</div>
+        <button id="settingsButton">⛭</button>
         <div id="pause">Pause</div>
-    </div>
+    </div>  
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Modifier les Durées</h2>
+            <label for="work-duration">Durée de travail (minutes):</label>
+            <input type="number" id="work-duration" value="25" min="1">
+            <br>
+            <label for="break-duration">Durée de pause (minutes):</label>
+            <input type="number" id="break-duration" value="5" min="1">
+            <br>
+            <button id="save-settings">Enregistrer</button>
+        </div>
+    </div>    
 
     <div id="progress-circle">
         <div id="progress-container">
@@ -22,8 +37,10 @@
         </div>
     </div>
 
-    <button id="startButton">▷</button>
-    <button id="resetButton">Reset</button>
+    <div id="buttonBar">
+        <button id="startButton">▷</button>
+        <button id="resetButton">⟳</button>
+    </div>
 
     <p>Lukas Fortin - Mathis Berot</p>
 </body>
